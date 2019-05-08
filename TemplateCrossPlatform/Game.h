@@ -8,11 +8,15 @@
 class Game: public AppComponent, private Timer{
     TexRect* mushroom;
     Rect* projectile;
+    TexRect* back;
     
     bool projectileVisible;
     bool mushroomVisible;
     bool up;
+    
     bool left;
+    bool right;
+    
     bool hit;
     float theta;
     float deg;
@@ -22,6 +26,7 @@ public:
     
     void draw() const ;
     void handleKeyDown(unsigned char, float, float);
+    void handleKeyUp(unsigned char, float, float);
     
     void action();
 

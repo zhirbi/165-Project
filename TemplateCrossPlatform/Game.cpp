@@ -10,6 +10,7 @@ Game::Game(){
 
 	const char* shroomFileName;
 	const char* fireballFileName;
+    const char* backgroundFileName;
 
 	// In Windows (Visual Studio only) the image files are found in the enclosing folder in relation to the project
 	// In other environments the image files are in the same folder as the project
@@ -18,16 +19,19 @@ Game::Game(){
 	shroomFileName = "../mushroom.png";
 	fireballFileName = "../fireball.bmp";
 	#else
-	shroomFileName = "mushroom.png";
-	fireballFileName = "fireball.bmp";
+	shroomFileName = "/Users/zhirbi/Documents/Documents/CSE165/Final Proj/assets/ship + explosion/ship6.png";
+	fireballFileName = "/Users/zhirbi/Documents/Documents/CSE165/Final Proj/assets/ship + explosion/Explosion.png";
+    backgroundFileName = "/Users/zhirbi/Documents/Documents/CSE165/Final Proj/TemplateCrossPlatform/bg1.png";
 	#endif
 
     mushroom = new TexRect(shroomFileName, -0.25, 0.5, 0.5, 0.5);
     projectile = new Rect(-0.05, -0.8, 0.1, 0.1);
-    explosion = new AnimatedRect(fireballFileName, 6, 6, 64, false, false, -0.25, 0.8, 0.5, 0.5);
+    explosion = new AnimatedRect(fireballFileName, 4, 3, 64, false, false, -0.25, 0.8, 0.5, 0.5);
+    back = new TexRect(backgroundFileName,-2, 1, 4, 2);
     
     up = false;
-    left = true;
+    left = false;
+    right = false;
     projectileVisible = true;
     mushroomVisible = true;
     theta = 0;
@@ -36,6 +40,7 @@ Game::Game(){
     
     setRate(1);
     start();
+    
 }
 
 void Game::action(){
@@ -48,18 +53,14 @@ void Game::action(){
     mx = 0.5 * cos(theta);
     my = 0.5 * sin(theta);
     
-//    if (left)
-//        mx -= 0.0005;
-//    else
-//        mx += 0.0005;
-//
-//    if (mx < -1.6f){
-//        left = false;
-//    }
-//    if (mx > 1.6 - mushroom->getW()){
-//        left = true;
-//    }
     
+
+    if(left){
+        projectile->setX(projectile->getX()- 0.0002);
+    }
+    if(right){
+        projectile->setX(projectile->getX() + 0.0002);
+    }
     
     mushroom->setX(mx - mushroom->getW()/2);
     mushroom->setY(my + mushroom->getH()/2);
@@ -67,7 +68,7 @@ void Game::action(){
     theta += 0.001;
     deg += 0.1;
     
-
+    
     if (!hit && up){
         float ypos = projectile->getY();
         ypos +=0.005;
@@ -83,20 +84,21 @@ void Game::action(){
             explosion->playOnce();
         }
     }
-    
+    //gravity type animation
     if (hit){
         explosion->setY(explosion->getY()-0.0001);
     }
 }
 
 void Game::draw() const {
-    
     if (projectileVisible){
         projectile->draw();
+        back->draw(0);
     }
     if (mushroomVisible){
-        mushroom->draw(0.0);
+        mushroom->draw(0.1);
     }
+    back->draw(0);
     explosion->draw(0.1);
 }
 
@@ -110,6 +112,21 @@ void Game::handleKeyDown(unsigned char key, float x, float y){
     else if (key == 'r'){
         start();
     }
+    else if (key == 'a'){
+        left = true;
+    }
+    else if (key == 'd'){
+        right = true;
+    }
+}
+
+void Game::handleKeyUp(unsigned char key, float x, float y){
+    if (key == 'a'){
+        left = false;
+    }
+    else if (key == 'd'){
+        right = false;
+    }
 }
 
 Game::~Game(){
@@ -117,4 +134,5 @@ Game::~Game(){
     delete mushroom;
     delete explosion;
     delete projectile;
+    delete back;
 }
