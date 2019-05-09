@@ -6,9 +6,10 @@
 #include "Timer.h"
 
 class Game: public AppComponent, private Timer{
-    TexRect* mushroom;
+    TexRect* enemy1;
     Rect* projectile;
     TexRect* back;
+    TexRect* player;
     
     bool projectileVisible;
     bool mushroomVisible;
@@ -16,6 +17,8 @@ class Game: public AppComponent, private Timer{
     
     bool left;
     bool right;
+    bool playerUp;
+    bool down;
     
     bool hit;
     float theta;

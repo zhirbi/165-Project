@@ -29,6 +29,12 @@ void App::keyDown(unsigned char key, float x, float y){
     }
 }
 
+void App::keyUp(unsigned char key, float x, float y){
+    for (std::vector<AppComponent*>::iterator i = components.begin(); i != components.end(); ++i) {
+        (*i)->handleKeyUp(key, x, y);
+    }
+}
+
 App::~App(){    
     for (std::vector<AppComponent*>::iterator i = components.begin(); i != components.end(); ++i) {
         delete *i;
