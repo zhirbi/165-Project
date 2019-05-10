@@ -12,6 +12,8 @@ Game::Game(){
 	const char* explodeAnimation;
     const char* backgroundFileName;
     const char* playerShip;
+    const char* ammo;
+    const char* playerExhaust;
 
 	// In Windows (Visual Studio only) the image files are found in the enclosing folder in relation to the project
 	// In other environments the image files are in the same folder as the project
@@ -24,15 +26,16 @@ Game::Game(){
 	explodeAnimation = "assets/ship+explosion/Explosion.png";
     backgroundFileName = "bg1.png";
     playerShip = "assets/ship+explosion/ship2.png";
+    ammo = "assets/Ship+explosion/shot2.png";
+    playerExhaust = "assets/Ship+explosion/Ship1_turbol_flight_001.png";
 	#endif
 
     enemy1 = new TexRect(enemyShip1, -0.25, 0.5, 0.5, 0.5);
-    projectile = new Rect(-0.05, -0.8, 0.1, 0.1);
-    //projectile should be an AnimatedRect that follows the player ship and visibility and animation on false, but when space bar is hit, it becomes visible
-    
-    player = new TexRect(playerShip, -0.05, -0.5, 0.5, 0.5);
+    player = new TexRect(playerShip, -0.05, -0.5, 0.7, 0.5);
     explosion = new AnimatedRect(explodeAnimation, 4, 3, 64, false, false, -0.25, 0.8, 0.5, 0.5);
     back = new TexRect(backgroundFileName,-2, 1, 4, 2);
+    projectile = new TexRect(ammo, player->getX()+.2, player->getY()-.2, 0.27, 0.3);
+    exhaust = new AnimatedRect(playerExhaust, 2, 2, 64, true, true, player->getX()+.09, player->getY()-.38, 0.5, 0.1);
     
     up = false;
     
@@ -71,16 +74,25 @@ void Game::action(){
     //player movement
     if(left == true){
         player->setX(player->getX() - 0.002);
+        projectile->setX(projectile->getX() - 0.002);
+        exhaust->setX(exhaust->getX() - 0.002);
     }
     if(right == true){
         player->setX(player->getX() + 0.002);
+        projectile->setX(projectile->getX() + 0.002);
+        exhaust->setX(exhaust->getX() + 0.002);
     }
     if(playerUp == true){
         player->setY(player->getY() + 0.002);
+        projectile->setY(projectile->getY() + 0.002);
+        exhaust->setY(exhaust->getY() + 0.002);
     }
     if(down == true){
         player->setY(player->getY() - 0.002);
+        projectile->setY(projectile->getY() - 0.002);
+        exhaust->setY(exhaust->getY() - 0.002);
     }
+    
     
     if (!hit && up){
         float ypos = projectile->getY();
@@ -98,6 +110,7 @@ void Game::action(){
         }
     }
     
+    
     //gravity type animation
     if (hit){
         explosion->setY(explosion->getY()-0.0001);
@@ -108,15 +121,17 @@ void Game::action(){
 
 void Game::draw() const {
     if (projectileVisible){
-        projectile->draw();
         back->draw(0);
+        projectile->draw(.39);
     }
     if (mushroomVisible){
-        enemy1->draw(0.1);
+        enemy1->draw(0.3);
     }
     back->draw(0);
-    player->draw(0.2);
-    explosion->draw(0.1);
+    player->draw(0.4);
+    exhaust->draw(0.41);
+    explosion->draw(0.5);
+    
 }
 
 void Game::handleKeyDown(unsigned char key, float x, float y){
@@ -156,13 +171,15 @@ void Game::handleKeyUp(unsigned char key, float x, float y){
     else if (key == 's'){
         down = false;
     }
+
 }
 
 Game::~Game(){
     stop();
     delete enemy1;
-    delete explosion;
-    delete projectile;
-    delete back;
     delete player;
+    delete explosion;
+    delete back;
+    delete projectile;
+    delete exhaust;
 }

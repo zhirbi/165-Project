@@ -7,9 +7,9 @@
 
 class Game: public AppComponent, private Timer{
     TexRect* enemy1;
-    Rect* projectile;
     TexRect* back;
     TexRect* player;
+    TexRect* projectile;
     
     bool projectileVisible;
     bool mushroomVisible;
@@ -23,8 +23,11 @@ class Game: public AppComponent, private Timer{
     bool hit;
     float theta;
     float deg;
+    
+    bool enAlive;
 public:
     AnimatedRect* explosion;
+    AnimatedRect* exhaust;
     Game();
     
     void draw() const ;
