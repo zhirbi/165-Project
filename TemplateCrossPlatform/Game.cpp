@@ -34,8 +34,8 @@ Game::Game(){
     player = new TexRect(playerShip, -0.05, -0.5, 0.7, 0.5);
     explosion = new AnimatedRect(explodeAnimation, 4, 3, 64, false, false, -0.25, 0.8, 0.5, 0.5);
     back = new TexRect(backgroundFileName,-2, 1, 4, 2);
-    projectile = new TexRect(ammo, player->getX()+.2, player->getY()-.2, 0.27, 0.3);
-    exhaust = new AnimatedRect(playerExhaust, 2, 2, 64, true, true, player->getX()+.09, player->getY()-.38, 0.5, 0.1);
+    projectile = new TexRect(ammo, 0.15, -0.7, 0.27, 0.3);
+    exhaust = new AnimatedRect(playerExhaust, 2, 2, 64, true, true, 0.04, -0.88, 0.5, 0.1);
     
     up = false;
     
@@ -99,7 +99,7 @@ void Game::action(){
         ypos +=0.005;
         projectile->setY(ypos);
 
-        if (enemy1->contains(0, ypos-0.005)){
+        if (enemy1->contains(projectile->getX(), projectile->getY()-0.005)){
             up = false;
             hit = true;
             projectileVisible = false;
@@ -121,8 +121,8 @@ void Game::action(){
 
 void Game::draw() const {
     if (projectileVisible){
-        back->draw(0);
         projectile->draw(.39);
+        back->draw(0);
     }
     if (mushroomVisible){
         enemy1->draw(0.3);
