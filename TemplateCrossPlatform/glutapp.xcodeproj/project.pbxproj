@@ -21,6 +21,7 @@
 		17CBE741227B0DAB004179ED /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17CBE73F227B0DAB004179ED /* TextBox.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		17CBE744227B528C004179ED /* Ad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17CBE742227B528C004179ED /* Ad.cpp */; };
 		17FAB37B2278B0900024F60A /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17FAB3792278B0900024F60A /* Game.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		511B8C8E22866E310048CAEC /* NewEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 511B8C8C22866E310048CAEC /* NewEnemy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +63,8 @@
 		17CBE743227B528C004179ED /* Ad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ad.h; sourceTree = "<group>"; };
 		17FAB3792278B0900024F60A /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		17FAB37A2278B0900024F60A /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		511B8C8C22866E310048CAEC /* NewEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NewEnemy.cpp; sourceTree = "<group>"; };
+		511B8C8F22866E4F0048CAEC /* NewEnemy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewEnemy.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +104,12 @@
 				17CBE740227B0DAB004179ED /* TextBox.h */,
 				17609DC1219C098400F85383 /* Rect.h */,
 				17609DC0219C098400F85383 /* Rect.cpp */,
-				17609DC4219C0DE800F85383 /* TexRect.h */,
-				17609DC3219C0DE800F85383 /* TexRect.cpp */,
 				17609DC9219C9C3E00F85383 /* AnimatedRect.cpp */,
 				17609DCA219C9C3E00F85383 /* AnimatedRect.h */,
+				17609DC4219C0DE800F85383 /* TexRect.h */,
+				17609DC3219C0DE800F85383 /* TexRect.cpp */,
+				511B8C8C22866E310048CAEC /* NewEnemy.cpp */,
+				511B8C8F22866E4F0048CAEC /* NewEnemy.h */,
 				173FEF021AA63A07006CCB85 /* Products */,
 				17609DBA219C077D00F85383 /* Frameworks */,
 			);
@@ -185,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CBE744227B528C004179ED /* Ad.cpp in Sources */,
+				511B8C8E22866E310048CAEC /* NewEnemy.cpp in Sources */,
 				17609DB8219BF07300F85383 /* App.cpp in Sources */,
 				173FEF0C1AA63AC4006CCB85 /* app_main.cpp in Sources */,
 				17609DCB219C9C3E00F85383 /* AnimatedRect.cpp in Sources */,

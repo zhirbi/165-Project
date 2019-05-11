@@ -28,6 +28,7 @@ class Game: public AppComponent, private Timer{
 public:
     AnimatedRect* explosion;
     AnimatedRect* exhaust;
+    AnimatedRect* Enemy1Exhaust;
     Game();
     
     void draw() const ;
