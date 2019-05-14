@@ -10,15 +10,18 @@ class Game: public AppComponent, private Timer{
     TexRect* back;
     TexRect* player;
     TexRect* projectile;
+    TexRect* GameOver;
     
     bool projectileVisible;
     bool mushroomVisible;
     bool up;
     
+    bool enemyVisible;
     bool left;
     bool right;
     bool playerUp;
     bool down;
+    bool playerHit;
     
     bool hit;
     float theta;

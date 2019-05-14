@@ -7,7 +7,17 @@
 Game::Game(){
 
 	// Some cross-platform compatimility stuff
-
+    
+    std::cout<< "GAME CONTROL" << std::endl;
+    std::cout<< "W - moves up" << std::endl;
+    std::cout<< "A - moves left" << std::endl;
+    std::cout<< "S - moves down" << std::endl;
+    std::cout<< "D - moves right" << std::endl;
+    std::cout<< "F - toggle fullscreen" << std::endl;
+    std::cout<< "P - pause game" << std::endl;
+    std::cout<< "R - resumes game" << std::endl;
+    std::cout<< "Z - restart" << std::endl;
+    
 	const char* enemyShip1;
 	const char* explodeAnimation;
     const char* backgroundFileName;
@@ -15,6 +25,7 @@ Game::Game(){
     const char* ammo;
     const char* playerExhaust;
     const char* E1Exhaust;
+    const char* OverSign;
 
 	// In Windows (Visual Studio only) the image files are found in the enclosing folder in relation to the project
 	// In other environments the image files are in the same folder as the project
@@ -30,6 +41,7 @@ Game::Game(){
     ammo = "assets/Ship+explosion/shot2.png";
     playerExhaust = "assets/Ship+explosion/Ship1_turbol_flight_001.png";
     E1Exhaust = "assets/Ship+explosion/Ship6_normal_flight_000.png";
+    OverSign = "assets/PinClipart.com_game-over-clipart_1505126-2.png";
 	#endif
 
     enemy1 = new TexRect(enemyShip1, -0.25, 0.8, 0.4, 0.4);
@@ -40,13 +52,16 @@ Game::Game(){
     //x + .2    y - .2
     exhaust = new AnimatedRect(playerExhaust, 2, 2, 64, true, true, 0.04, -0.88, 0.5, 0.1);
     Enemy1Exhaust = new AnimatedRect(E1Exhaust, 2, 2, 64, true, true, 0.25, -0.5, 0.3, 0.9);
+    GameOver = new TexRect(OverSign, -0.5, 0.5, 1, 0.8);
     
     up = false;
     
+    enemyVisible = true;
     left = false;
     right = false;
     down = false;
     playerUp = false;
+    playerHit = false;
     
     projectileVisible = true;
     mushroomVisible = true;
@@ -109,12 +124,23 @@ void Game::action(){
             hit = true;
             projectileVisible = false;
             mushroomVisible = false;
+            enemyVisible = false;
             explosion->setX(enemy1->getX());
             explosion->setY(enemy1->getY());
             explosion->playOnce();
         }
     }
     
+    /*crashes at times when game over pops up, not sure if cause of the stop() or not
+     */
+    if(player->contains(enemy1->getX(), enemy1->getY()) && enemyVisible){
+        stop();
+        enemyVisible = false;
+        playerHit = true;
+        explosion->setX(player->getX());
+        explosion->setY(player->getY());
+        explosion->playOnce();
+    }
     
     
     //gravity type animation
@@ -135,9 +161,18 @@ void Game::draw() const {
         enemy1->draw(0.3);
         Enemy1Exhaust->draw(0.29);
     }
+    if (!playerHit) {
+        back->draw(0);
+        player->draw(0.4);
+        exhaust->draw(0.41);
+    }
+    
+    if(playerHit){
+        back->draw(0);
+        GameOver->draw(0.6);
+    }
+    
     back->draw(0);
-    player->draw(0.4);
-    exhaust->draw(0.41);
     explosion->draw(0.5);
     
 }

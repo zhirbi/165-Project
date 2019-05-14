@@ -22,6 +22,10 @@ void App::keyDown(unsigned char key, float x, float y){
     else if (key == 'f'){
         toggleFullScreen();
     }
+    else if(key == 'z'){
+        App::~App();
+        addComponent(new Game());
+    }
     else{
         for (std::vector<AppComponent*>::iterator i = components.begin(); i != components.end(); ++i) {
             (*i)->handleKeyDown(key, x, y);
