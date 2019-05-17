@@ -4,6 +4,7 @@
 #include "AppComponent.h"
 #include "AnimatedRect.h"
 #include "Timer.h"
+#include "NewEnemy.h"
 
 class Game: public AppComponent, private Timer{
     TexRect* enemy1;
@@ -11,6 +12,10 @@ class Game: public AppComponent, private Timer{
     TexRect* player;
     TexRect* projectile;
     TexRect* GameOver;
+    TexRect* projectile2;
+    TexRect* amount1;
+    TexRect* amount2;
+    NewEnemy* enemy2;
     
     bool projectileVisible;
     bool mushroomVisible;
@@ -22,6 +27,8 @@ class Game: public AppComponent, private Timer{
     bool playerUp;
     bool down;
     bool playerHit;
+    bool shot1;
+    bool shot2;
     
     bool hit;
     float theta;
@@ -32,6 +39,7 @@ public:
     AnimatedRect* explosion;
     AnimatedRect* exhaust;
     AnimatedRect* Enemy1Exhaust;
+    AnimatedRect* Enemy2Exhaust;
     Game();
     
     void draw() const ;
