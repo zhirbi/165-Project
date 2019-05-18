@@ -29,6 +29,7 @@ Game::Game(){
     const char* OverSign;
     const char* Aamount;
     const char* enemyShip2;
+    const char* E2Exhaust;
     
     // In Windows (Visual Studio only) the image files are found in the enclosing folder in relation to the project
     // In other environments the image files are in the same folder as the project
@@ -47,6 +48,7 @@ Game::Game(){
     OverSign = "assets/PinClipart.com_game-over-clipart_1505126-2.png";
     Aamount = "assets/ammo_3.png";
     enemyShip2 = "assets/Ship+explosion/ship3.png";
+    E2Exhaust = "assets/Ship+explosion/Ship3_turbo_flight_001.png";
 #endif
     
     enemy1 = new TexRect(enemyShip1, -0.25, 0.8, 0.4, 0.4);
@@ -61,6 +63,7 @@ Game::Game(){
     amount1 = new TexRect(Aamount, -1.75, -0.8, 0.4, 0.15);
     amount2 = new TexRect(Aamount, -1.55, -0.8, 0.4, 0.15);
     enemy2 = new NewEnemy(enemyShip2, -0.45, 0.8, 0.4, 0.4);
+    Enemy2Exhaust = new AnimatedRect(E2Exhaust, 2, 2, 64, true, true, 0.08, -0.88, 0.2, 0.4);
     
     up = false;
     enemyVisible = true;
@@ -71,10 +74,13 @@ Game::Game(){
     playerHit = false;
     shot1 = true;
     shot2 = true;
+    hit2 = false;
+    projectileVisible2 = true;
     
     
     projectileVisible = true;
     mushroomVisible = true;
+    enemy2Vis = true;
     theta = 0;
     deg = 0;
     hit = false;
@@ -105,29 +111,35 @@ void Game::action(){
     
     enemy2->setX(e2x - enemy2->getW()/2);
     enemy2->setY(e2y + enemy2->getH()/2);
+    Enemy2Exhaust->setX(enemy2->getX()+0.11);
+    Enemy2Exhaust->setY(enemy2->getY()+0.2);
     
     theta += 0.001;
     deg += 0.1;
-    
+
     //player movement
     if(left == true){
         player->setX(player->getX() - 0.002);
         projectile->setX(projectile->getX() - 0.002);
+        projectile2->setX(projectile2->getX() - 0.002);
         exhaust->setX(exhaust->getX() - 0.002);
     }
     if(right == true){
         player->setX(player->getX() + 0.002);
         projectile->setX(projectile->getX() + 0.002);
+        projectile2->setX(projectile2->getX() + 0.002);
         exhaust->setX(exhaust->getX() + 0.002);
     }
     if(playerUp == true){
         player->setY(player->getY() + 0.002);
         projectile->setY(projectile->getY() + 0.002);
+        projectile2->setY(projectile2->getY() + 0.002);
         exhaust->setY(exhaust->getY() + 0.002);
     }
     if(down == true){
         player->setY(player->getY() - 0.002);
         projectile->setY(projectile->getY() - 0.002);
+        projectile2->setY(projectile2->getY() - 0.002);
         exhaust->setY(exhaust->getY() - 0.002);
     }
     
@@ -136,22 +148,58 @@ void Game::action(){
         float ypos = projectile->getY();
         ypos +=0.005;
         projectile->setY(ypos);
-        if (enemy1->contains(projectile->getX(), projectile->getY()-0.005)){
+        if (enemy2->contains(projectile->getX(), projectile->getY()-0.005)){
             up = false;
             hit = true;
             projectileVisible = false;
+            enemy2Vis = false;
+            explosion->setX(enemy2->getX()-.1);
+            explosion->setY(enemy2->getY()-.2);
+            explosion->playOnce();
+        }
+        hit2 = true;
+    }
+    
+    if (hit2 == true && up){
+        float ypos2 = projectile2->getY();
+        ypos2 +=0.005;
+        projectile2->setY(ypos2);
+        if (enemy1->contains(projectile2->getX(), projectile2->getY()-0.005)){
+            up = false;
+            hit = true;
+            projectileVisible2 = false;
             mushroomVisible = false;
-            enemyVisible = false;
             explosion->setX(enemy1->getX()+.01);
             explosion->setY(enemy1->getY()-.2);
             explosion->playOnce();
         }
     }
     
+    if(enemy2Vis == false && mushroomVisible == false){
+        enemyVisible = false;
+    } else{
+        enemyVisible = true;
+    }
+    
+    
+    if(mushroomVisible == false && enemy2Vis == true){
+        enemy2->killFirst();
+    }
+    
     /*crashes at times when game over pops up, not sure if cause of the stop() or not
      */
     if(enemyVisible){
-        if(player->contains(enemy1->getX()+.45, enemy1->getY()-.2)){
+        if(player->contains(enemy1->getX()+.45, enemy1->getY()-.2) && player->contains(enemy1->getX()-0.06, enemy1->getY()-.2)){
+            stop();
+            enemyVisible = false;
+            projectileVisible = false;
+            playerHit = true;
+            explosion->setX(player->getX());
+            explosion->setY(player->getY());
+            explosion->playOnce();
+        }
+        
+        if(player->contains(enemy2->getX()-0.07, enemy2->getY()-.2) && player->contains(enemy2->getX()+0.5, enemy2->getY()-.2)){
             stop();
             enemyVisible = false;
             projectileVisible = false;
@@ -176,15 +224,26 @@ void Game::draw() const {
         back->draw(0);
         enemy1->draw(0.3);
         enemy2->draw(0.31);
-        projectile->draw(.39);
+        projectile->draw(0.39);
         amount1->draw(0.2);
         amount2->draw(0.21);
+    }
+    
+    if (projectileVisible2 && projectileVisible == false) {
+        back->draw(0);
+        projectile2->draw(0.39);
+        enemy1->draw(0.3);
+        amount1->draw(0.2);
     }
     if (mushroomVisible){
         back->draw(0);
         enemy1->draw(0.3);
-        enemy2->draw(0.31);
         Enemy1Exhaust->draw(0.29);
+    }
+    if(enemy2Vis){
+        back->draw(0);
+        enemy2->draw(0.3);
+        Enemy2Exhaust->draw(0.29);
     }
     if (!playerHit) {
         back->draw(0);
@@ -210,11 +269,13 @@ void Game::handleKeyDown(unsigned char key, float x, float y){
         stop();
         exhaust->pause();
         Enemy1Exhaust->pause();
+        Enemy2Exhaust->pause();
     }
     else if (key == 'r'){
         start();
         exhaust->resume();
         Enemy1Exhaust->resume();
+        Enemy2Exhaust->resume();
     }
     else if (key == 'a'){
         left = true;
@@ -243,7 +304,6 @@ void Game::handleKeyUp(unsigned char key, float x, float y){
     else if (key == 's'){
         down = false;
     }
-    
 }
 
 Game::~Game(){
@@ -258,4 +318,5 @@ Game::~Game(){
     delete GameOver;
     delete amount1;
     delete amount2;
+    delete enemy2;
 }
