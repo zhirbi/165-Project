@@ -15,3 +15,6 @@ ESC - quit
 # Screenshots
 <img width="1440" alt="Screen Shot 2019-05-17 at 18 14 49" src="https://user-images.githubusercontent.com/43301201/57962751-e5c58000-78cf-11e9-83d8-d40f784faa92.png">
 
+<img width="1440" alt="Screen Shot 2019-05-17 at 18 17 34" src="https://user-images.githubusercontent.com/43301201/57962761-14435b00-78d0-11e9-9350-75bef4a362dc.png">
+
+
