@@ -319,4 +319,6 @@ Game::~Game(){
     delete amount1;
     delete amount2;
     delete enemy2;
+    delete Enemy2Exhaust;
+    delete projectile2;
 }
