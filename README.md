@@ -1,9 +1,9 @@
-# Clone of Space Invader (Dumbed Down)
+# Simple Clone of Space Invader
 A simple Space Invader-esque type of game created using C++ and Glut.
 
 
 # Description
-A simple game project developed with Object Oriented guidelines. Due to time restrictions, my partner Jason and I were only able to create a game project that was simple in its core. We ultimated decided to take the approach of a Space Invade clone. Holistically speaking, the design and logic of our clone is a simple one stage game that require the user to shoot down enemy space ship that rotates in circular motion, while the user have free range of movements but only with 2 shot available. 
+A simple game project developed with Object Oriented guidelines, separating the support header file where the functions, and initialization of variables belong from the implementation cpp file where it calls the various functions defined in the header file. Due to time restrictions, my partner Jason and I were only able to create a game project that was simple in its core. We ultimated decided to take the approach of a Space Invade clone. Holistically speaking, the design and game logic of our clone is a simple one stage game that require the user to shoot down enemy space ship that rotates in circular motion, while the user have free range of movements but only with 2 shot available. As for the graphics of the game, various sprite files were gathered, some of which stitched together by code are used to generate a functioning UI by layering the different sprite together in different order.
 
 # Controls
 W - moves up <br/>
@@ -29,8 +29,3 @@ This project was completed alongside: <br/>
 Jason Feng <br/>
 Computer Science and Engineering <br/>
 University of California, Merced <br/>
-
-
-
-
-
