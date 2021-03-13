@@ -1,5 +1,5 @@
 # Simple Clone of Space Invader
-A simple Space Invader-esque type of game created using C++ and Glut.
+A simple Space Invader-esque type of game created using C++ and OpenGL's library, GLUT.
 
 
 # Description
