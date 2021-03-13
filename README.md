@@ -25,10 +25,10 @@ ESC - quit <br/>
 <img width="1440" alt="Screen Shot 2019-05-17 at 18 19 32" src="https://user-images.githubusercontent.com/43301201/57962795-5ff60480-78d0-11e9-8d8f-84fabf216bf8.png">
 
 # Collaboration
-This project was completed alongside:
-Jason Feng
-Computer Science and Engineering
-University of California, Merced
+This project was completed alongside: <br/>
+Jason Feng <br/>
+Computer Science and Engineering <br/>
+University of California, Merced <br/>
 
 
 
